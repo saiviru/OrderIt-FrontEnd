@@ -1,0 +1,3 @@
+export const SET_LOADING = "SET_LOADING"
+export const LOGGED_SESSION = "LOGGED_SESSION"
+export const LOGGED_USER = 'LOGGED_USER';
