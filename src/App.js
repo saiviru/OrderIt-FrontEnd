@@ -1,4 +1,5 @@
 import Register from "./Components/Auth/Register";
+// import Register from "./Components/Auth/NewRegister";
 import Login from "./Components/Auth/Login";
 import ConfirmEmail from "./Components/Auth/ConfirmEmail";
 import Status from "./Components/Auth/Status";

@@ -138,8 +138,8 @@ export default function Login() {
             <TextField
             {...register('password', {
                 required: true,
-                pattern: /\d*(?:[a-zA-Z]){8,}\d*/,
-                // pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}/
+                // pattern: /\d*(?:[a-zA-Z]){8,}\d*/,
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}/
             })}
             onChange={(e) => {
                 setPassword(e.target.value);
