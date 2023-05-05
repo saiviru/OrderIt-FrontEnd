@@ -63,8 +63,8 @@ const MenuList = () => {
   useEffect(() => {
     axios.get(baseURL + "/menuGet").then((response) => {
       setMenu(response.data);
+      console.log("res:", response.data);
     });
-    console.log("res:", response.data);
   }, []);
 
   const classes = useStyles();
