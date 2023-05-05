@@ -30,6 +30,7 @@ const theme = createTheme({
     },
   },
 });
+
 const useStyles = makeStyles((theme) => ({
   buttonHolder: {
     position: "absolute",
@@ -59,19 +60,14 @@ const baseURL = "https://apisuper.thedigitallicious.online/api";
 const MenuList = () => {
   const [menu, setMenu] = useState("");
 
-  console.log("before useEffect:");
-
   useEffect(() => {
     axios.get(baseURL + "/menuGet").then((response) => {
       setMenu(response.data);
     });
-    console.log("res:");
+    console.log("res:", response.data);
   }, []);
 
-  console.log("after useEffect");
-
   const classes = useStyles();
-  console.log("menu");
 
   return (
     <ThemeProvider theme={theme}>
