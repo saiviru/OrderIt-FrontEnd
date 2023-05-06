@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import AuthContextProvider from "./Components/Auth/GlobalStates";
 import {Account} from './Components/Auth/Account';
+import {Checkout} from './Components/Dashboard/Checkout'
 import ProtectedComponent from './Components/Auth/ProtectedComponent';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/menu" element={<ProtectedComponent><MenuList /></ProtectedComponent>} />
+            <Route path="/checkout" element={<ProtectedComponent><Checkout /></ProtectedComponent>} />
             <Route path="/status" element={<ProtectedComponent><Status /></ProtectedComponent>} />
             <Route path="/register" element={<Register />} />
             <Route path="/confirmEmail" element={<ConfirmEmail />} />
