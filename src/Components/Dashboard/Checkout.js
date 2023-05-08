@@ -58,7 +58,6 @@ export const Checkout = () => {
 
   const navigate = useNavigate();
 
-
   const classes = useStyles();
 
   const Demo = styled("div")(({ theme }) => ({
@@ -96,6 +95,7 @@ export const Checkout = () => {
         userId: "6176a9a6c0c6e906c36a4d10",
       })
       .then(function (response) {
+        console.log("the response:",response)
         setPopup(true);
       })
       .catch(function (error) {
