@@ -77,6 +77,7 @@ export const Checkout = () => {
     setPopup(false);
     let finalItems = [];
     let totalPrice = 0;
+    let indPrice = 0;
     dirtyItems.map((each) => {
       finalItems.push({
         itemId: each.id,
@@ -84,7 +85,8 @@ export const Checkout = () => {
         price: each.price,
         name: each.name,
       });
-      totalPrice += parseFloat(each.price);
+      indPrice = parseFloat(each.price) * parseFloat(each.quantity)
+      totalPrice += parseFloat(indPrice);
     });
     axios
       .post(baseURL + "/order", {
