@@ -16,7 +16,7 @@ export default function menuDetails(state = INITIAL_STATE, action) {
         menuItems: state.menuItems.concat(action.payload),
       };
       case ACTIONTYPES.UPDATE_QUANTITY:
-        const { id, quantity } = action.payload;
+        const { id, quantity, price, name } = action.payload;
         const newQuantity = quantity >= 0 ? quantity : 0; // quantity should never be negative
         const menuItems = state.menuItems.map(item => {
           if (item._id === id) {
@@ -30,13 +30,12 @@ export default function menuDetails(state = INITIAL_STATE, action) {
         const dirtyItems = [...state.dirtyItems]; // create a copy of dirtyItems array
         const itemIndex = dirtyItems.findIndex(item => item.id === id);
         if (itemIndex === -1) {
-            dirtyItems.push({ id, quantity: newQuantity });
+            dirtyItems.push({ id, price, name,  quantity: newQuantity });
         }
         else {
             dirtyItems[itemIndex].quantity = newQuantity;
         }
         const finalCart = dirtyItems.filter(item => item.quantity !== 0);
-        console.log("the final cart:",finalCart)
         return {
           ...state,
           menuItems,

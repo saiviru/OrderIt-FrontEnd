@@ -11,7 +11,7 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useSelector, useDispatch } from "react-redux";
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom";
 import {
     UPDATE_QUANTITY
 } from "../redux/menus/ActionTypes";
@@ -98,8 +98,8 @@ const MenuList = () => {
 
   const classes = useStyles();
 
-  const handleQuantityChange = (id, quantity) => {
-    dispatch({ type: UPDATE_QUANTITY, payload: { id, quantity } });
+  const handleQuantityChange = (id, quantity, price, name) => {
+    dispatch({ type: UPDATE_QUANTITY, payload: { id, quantity, price, name } });
     console.log("the updated quantity:", totalState);
   };
 
@@ -107,18 +107,7 @@ const MenuList = () => {
     navigate("/checkout")
   }
 
-  async function placeOrder(dispatch, state) {
-    const finalItems = dirtyItems.map((itemId) => {
-      const item = state.cartItems.find((item) => item.id === itemId);
-      return { id: itemId, quantity: item.quantity };
-    });
-    // const response = await fetch("/api/order", {
-    //     method: "POST",
-    //     body: JSON.stringify(finalItems),
-    //   });
-
-    // Handle the response here
-  }
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -177,7 +166,7 @@ const MenuList = () => {
                             component="button"
                             className={classes.addButtons}
                             onClick={() => {
-                              handleQuantityChange(item._id, item.quantity - 1);
+                              handleQuantityChange(item._id, item.quantity - 1, item.price, item.itemName);
                             }}
                           >
                             -
@@ -187,7 +176,7 @@ const MenuList = () => {
                             component="button"
                             className={classes.addButtons}
                             onClick={() => {
-                              handleQuantityChange(item._id, item.quantity + 1);
+                              handleQuantityChange(item._id, item.quantity + 1, item.price, item.itemName);
                             }}
                           >
                             +
@@ -199,7 +188,7 @@ const MenuList = () => {
                             component="button"
                             className={classes.addButtons}
                             onClick={() => {
-                              handleQuantityChange(item._id, item.quantity + 1);
+                              handleQuantityChange(item._id, item.quantity + 1, item.price, item.itemName);
                             }}
                           >
                             Add
