@@ -89,7 +89,7 @@ export const Checkout = () => {
       totalPrice += parseFloat(indPrice);
     });
     axios
-      .post(baseURL + "/order", {
+      .post(baseURL + "/orders", {
         items: finalItems,
         totalAmount: totalPrice,
         status: "new",
