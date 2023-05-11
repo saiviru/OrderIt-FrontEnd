@@ -24,7 +24,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import "./MenuList.css";
 
-const baseURL = "https://apisuper.thedigitallicious.online";
+const baseURL = "https://apisuper.thedigitallicious.online/api";
 
 const useStyles = makeStyles((theme) => ({
   root: {
