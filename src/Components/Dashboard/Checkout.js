@@ -24,8 +24,6 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import "./MenuList.css";
 
-const baseURL = "https://apisuper.thedigitallicious.online/api";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -89,10 +87,10 @@ export const Checkout = () => {
       totalPrice += parseFloat(indPrice);
     });
     axios
-      .post(baseURL + "/orders", {
+      .post("/api/orders", {
         items: finalItems,
         totalAmount: totalPrice,
-        status: "new",
+        status: "New",
         restaurantId: "6176a9a6c0c6e906c36a4d10",
         userId: "6176a9a6c0c6e906c36a4d10",
       })

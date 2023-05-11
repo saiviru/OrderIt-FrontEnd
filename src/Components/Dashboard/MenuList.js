@@ -75,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const baseURL = "https://apisuper.thedigitallicious.online/api";
 
 const MenuList = () => {
   const dispatch = useDispatch();
@@ -86,7 +85,7 @@ const MenuList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(baseURL + "/menuGet").then((response) => {
+    axios.get("/api/menuGet").then((response) => {
       let menuData = response.data.map((item) => ({ ...item, quantity: 0 }));
       dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
     });
