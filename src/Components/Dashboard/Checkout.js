@@ -1,15 +1,9 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import FolderIcon from "@mui/icons-material/Folder";
-import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AdjustIcon from "@mui/icons-material/Adjust";
-
-
+import { UPDATE_QUANTITY } from "../redux/menus/ActionTypes";
 import {
   Grid,
   Box,
@@ -40,18 +34,17 @@ const useStyles = makeStyles((theme) => ({
     // justifyContent: "center", // added
   },
   cart: {
-     width: "100%",
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex start ",
-    alignItems:'center',
+    alignItems: "center",
     // border: "1px solid black",
-    marginBottom:'50px',
-   
+    marginBottom: "50px",
   },
   itemList: {
     // border: "1px solid black",
-    marginLeft:'30px'
+    marginLeft: "30px",
   },
   listItem: {
     // border: "2px solid black",
@@ -81,54 +74,52 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     height: "60px",
-    borderRadius:'50px',
+    borderRadius: "50px",
     hover: {
       "&:hover": {
-        backgroundColor: 'rgb(7, 177, 77, 0.42)'
-      }
-    }
+        backgroundColor: "rgb(7, 177, 77, 0.42)",
+      },
+    },
   },
   orderButton: {
     width: "100%",
     height: "50px",
     background: theme.palette.primary.main + "!important",
-    
   },
   boxContainer: {
     height: "80%",
-    width:"90%",
+    width: "90%",
     display: "flex",
-    flexDirection:'column',
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-start",
     // border: `1px solid ${theme.palette.primary.main}`, // Set the border color to the primary color from the theme
   },
-  boxList:{
+  boxList: {
     // height: "60%",
-    width:"100%",
+    width: "100%",
     // border: `1px solid ${theme.palette.primary.main}`, // Set the border color to the primary color from the theme
     // marginBottom:'30px',
     // boxShadow: 'inset 0 0 10px grey',
-   
   },
-  orderItem:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'space-between',
-    boxShadow: 'inset 0 0 10px #cfd8dc',
-    padding:"10px",
-    margin:'10px',
-    borderRadius:'5px'
+  orderItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    boxShadow: "inset 0 0 10px #cfd8dc",
+    padding: "10px",
+    margin: "10px",
+    borderRadius: "5px",
   },
-  orderIcon:{ 
-  //   display:'flex',
-  //  flexDirection:'column',
-  //  alignItems:'center',
-  //  justifyContent:'flex-start'
-   marginLeft:'10px',
-   width:'100px'
+  orderIcon: {
+    //   display:'flex',
+    //  flexDirection:'column',
+    //  alignItems:'center',
+    //  justifyContent:'flex-start'
+    marginLeft: "10px",
+    width: "100px",
   },
- 
+
   addButtons: {
     // backgroundColor: "#80cbc4",
     borderRadius: "50%",
@@ -137,24 +128,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "15px",
     margin: "4px ",
     cursor: "pointer",
-    border: '1px solid white'
-
+    border: "1px solid white",
   },
-  singleItem:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'flex-start'
+  singleItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
-  buttonHolder:{
-    boxShadow: 'inset 0 0 10px #cfd8dc',
+  buttonHolder: {
+    boxShadow: "inset 0 0 10px #cfd8dc",
     borderRadius: "5px",
-    border: '0'
-
+    border: "0",
   },
-  cookPop:{
-    width:'100%',
-  }
-  
+  cookPop: {
+    width: "100%",
+  },
 }));
 
 export const Checkout = () => {
@@ -167,6 +155,7 @@ export const Checkout = () => {
   const [popupOpen, setPopupOpen] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const classes = useStyles();
 
@@ -188,7 +177,7 @@ export const Checkout = () => {
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
-  
+
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
@@ -224,6 +213,15 @@ export const Checkout = () => {
         console.log(error);
       });
   }
+
+  //the quantity change
+  const handleQuantityChange = (id, quantity, price, name) => {
+    dispatch({
+      type: UPDATE_QUANTITY,
+      payload: { id, quantity, price, name },
+    });
+    console.log("the updated quantity:", totalState);
+  };
 
   return (
     <div>
@@ -318,10 +316,17 @@ export const Checkout = () => {
           )}
         </Grid>
       </Box> */}
-       
-      <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Box className={classes.boxContainer}>
-        <div className={classes.cart}>
+          <div className={classes.cart}>
             {" "}
             <Button
               // variant="outlined"
@@ -331,17 +336,21 @@ export const Checkout = () => {
               onClick={handleGoBack}
             ></Button>
             <Typography
-              sx={{ ml:'40px', textAlign: "center" }}
+              sx={{ ml: "40px", textAlign: "center" }}
               variant="h6"
               component="div"
             >
               View Order
             </Typography>
-            
           </div>
           <Box className={classes.boxList}>
-          <div className={classes.orderItem}> 
-      <div  className={classes.singleItem}>  <AdjustIcon
+            {totalState.dirtyItems !== ""
+              ? totalState.dirtyItems.map((item) => {
+                  return (
+                    <div className={classes.orderItem}>
+                      <div className={classes.singleItem}>
+                        {" "}
+                        <AdjustIcon
                           sx={{
                             color: "green",
                             display: "inline",
@@ -349,36 +358,41 @@ export const Checkout = () => {
                           }}
                         />
                         <div className={classes.orderIcon}>
-                           <h5>chicken biryani tasty</h5> 
-                            {/* <p>&#x20B9; </p> */}
-                        </div></div> 
+                          <h5>{item.name}</h5>
+                          {/* <p>&#x20B9; </p> */}
+                        </div>
+                      </div>
+                      <p>&#x20B9; {item.price * item.quantity} </p>
 
-                         <p>&#x20B9; 300</p>  
-      
-                        {/* {item.quantity > 0 ? ( */}
-                        <Box className={classes.buttonHolder} component="span">
-                          <Box
-                            component="button"
-                            className={classes.addButtons}
-                            // onClick={() => {
-                            //   handleQuantityChange(item._id, item.quantity - 1, item.price, item.itemName);
-                            // }}
-                          >
-                            -
-                          </Box>{" "}
-                          {/* {item.quantity}{" "} */} 2
-                          <Box
-                            component="button"
-                            className={classes.addButtons}
-                            // onClick={() => {
-                            //   handleQuantityChange(item._id, item.quantity + 1, item.price, item.itemName);
-                            // }}
-                          >
-                            +
-                          </Box>
+                      {/* {item.quantity > 0 ? ( */}
+                      <Box className={classes.buttonHolder} component="span">
+                        <Box
+                          component="button"
+                          className={classes.addButtons}
+                          onClick={() => {
+                            handleQuantityChange(
+                              item.id,
+                              item.quantity - 1,
+                              item.price,
+                              item.itemName
+                            );
+                          }}
+                        >
+                          -
+                        </Box>{" "}
+                        {item.quantity}{" "} 
+                        <Box
+                          component="button"
+                          className={classes.addButtons}
+                          onClick={() => {
+                            handleQuantityChange(item.id, item.quantity + 1, item.price, item.itemName);
+                          }}
+                        >
+                          +
                         </Box>
-                    
-                        {/* <Box className={classes.buttonHolder} component="span">
+                      </Box>
+
+                      {/* <Box className={classes.buttonHolder} component="span">
                           <Box
                             component="button"
                             className={classes.addButtons}
@@ -389,128 +403,81 @@ export const Checkout = () => {
                             Add
                           </Box>
                         </Box> */}
-                    
-          </div>
-          <div className={classes.orderItem}> 
-      <div  className={classes.singleItem}>  <AdjustIcon
-                          sx={{
-                            color: "green",
-                            display: "inline",
-                            fontSize: "medium",
-                          }}
-                        />
-                        <div className={classes.orderIcon}>
-                           <h5>Biryani</h5> 
-                            {/* <p>&#x20B9; </p> */}
-                        </div></div>   
-                        <p>&#x20B9; 200 </p>  
-      
-                        {/* {item.quantity > 0 ? ( */}
-                        <Box className={classes.buttonHolder} component="span">
-                          <Box
-                            component="button"
-                            className={classes.addButtons}
-                            // onClick={() => {
-                            //   handleQuantityChange(item._id, item.quantity - 1, item.price, item.itemName);
-                            // }}
-                          >
-                            -
-                          </Box>{" "}
-                          {/* {item.quantity}{" "} */} 1
-                          <Box
-                            component="button"
-                            className={classes.addButtons}
-                            // onClick={() => {
-                            //   handleQuantityChange(item._id, item.quantity + 1, item.price, item.itemName);
-                            // }}
-                          >
-                            +
-                          </Box>
-                        </Box>
-                    
-                        {/* <Box className={classes.buttonHolder} component="span">
-                          <Box
-                            component="button"
-                            className={classes.addButtons}
-                            // onClick={() => {
-                            //   handleQuantityChange(item._id, item.quantity + 1, item.price, item.itemName);
-                            // }}
-                          >
-                            Add
-                          </Box>
-                        </Box> */}
-                    
-          </div>
-         
-         
-          
-
+                    </div>
+                  );
+                })
+              : null}
           </Box>
           <div>
-          <a  onClick={handleOpenPopup} style={{
-                            color: "blue",
-                            // display: "inline",
-                            fontSize: "small",
-                            marginRight:"100px"
-                          }} >Add cooking instructions?</a>
-         </div>
-          </Box>
-       
-
-          <div className={classes.footer}>
-            <Button
-              className={classes.orderButton}
-              variant="contained"
-              color="primary"
-              onClick={placeOrder}
-             
+            <a
+              onClick={handleOpenPopup}
+              style={{
+                color: "blue",
+                // display: "inline",
+                fontSize: "small",
+                marginRight: "100px",
+              }}
             >
-              Place Order
-            </Button>
+              Add cooking instructions?
+            </a>
           </div>
-          {popup && (
-            <div>
-              <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Popup Title</DialogTitle>
-                <DialogContent dividers>
-                  <p>Your order has been sent successfully!</p>
-                </DialogContent>
-                <DialogActions
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={handleClose} autoFocus>
-                    OK
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-            
-          )}
-      </div>
-      <Dialog  className={ classes.cookPop} open={popupOpen} onClose={handleClosePopup}>
-  <DialogTitle>Cooking Instructions</DialogTitle>
-  <DialogContent>
-    <TextField
-      label="Instructions"
-      multiline
-      rows={4}
-      variant="outlined"
-      fullWidth
-      // Add any necessary props or event handlers
-    />
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={handleClosePopup} color="primary">
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
+        </Box>
 
+        <div className={classes.footer}>
+          <Button
+            className={classes.orderButton}
+            variant="contained"
+            color="primary"
+            onClick={placeOrder}
+          >
+            Place Order
+          </Button>
+        </div>
+        {popup && (
+          <div>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Popup Title</DialogTitle>
+              <DialogContent dividers>
+                <p>Your order has been sent successfully!</p>
+              </DialogContent>
+              <DialogActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose} autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
+      </div>
+      <Dialog
+        className={classes.cookPop}
+        open={popupOpen}
+        onClose={handleClosePopup}
+      >
+        <DialogTitle>Cooking Instructions</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Instructions"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            // Add any necessary props or event handlers
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClosePopup} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
