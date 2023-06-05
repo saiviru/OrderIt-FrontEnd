@@ -39,13 +39,13 @@
 }
 
 .course-preview {
-	background-color: #2a265f;
+	background-color:'#4caf50';
 	color: #fff;
 	padding: 30px;
 	max-width: 200px;
     width: 150px;
 }
-
+/* 
 .course-preview a {
 	color: #fff;
 	display: inline-block;
@@ -53,7 +53,7 @@
 	opacity: 0.6;
 	margin-top: 30px;
 	text-decoration: none;
-}
+} */
 
 .course-info {
 	padding: 10px;
