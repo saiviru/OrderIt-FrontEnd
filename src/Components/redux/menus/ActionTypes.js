@@ -1,3 +1,12 @@
-export const SET_LOADING = "SET_LOADING"
-export const LOGGED_SESSION = "LOGGED_SESSION"
-export const LOGGED_USER = 'LOGGED_USER';
+export const STARTED_ADDING = "STARTED_ADDING"
+export const SET_MENU_ITEMS = "SET_MENU_ITEMS"
+export const ADD_ITEM = "ADD_ITEM"
+export const DELETE_ITEM = "DELETE_ITEM"
+export const UPDATE_MENU_ITEMS = "UPDATE_MENU_ITEMS"
+export const ITEMS_CURRENT = "ITEMS_CURRENT"
+export const ITEMS_FINAL = 'ITEMS_FINAL';
+export const UPDATE_UI = "UPDATE_UI"
+export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM"
+export const ADD_TO_CART = "ADD_TO_CART"
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART"
+export const UPDATE_QUANTITY = "UPDATE_QUANTITY"
