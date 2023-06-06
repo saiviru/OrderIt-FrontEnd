@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // import AppBar from '@mui/material/AppBar';
 // import Box from '@mui/material/Box';
 // import Toolbar from '@mui/material/Toolbar';
@@ -28,15 +28,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 const NewMenu = () => {
+  const [category, setCategoty] = useState('Best Seller');
+
   const classes = useStyles();
+
+  const handleDataFromChild = (data) => {
+    setCategoty(data);
+  };
   return (
    
     <div className={classes.menuList} >
       {" "}
       <Header />
        {/* <Search /> */}
-      <Catergory />
-      <MenuList />
+      <Catergory sendDataToParent={handleDataFromChild}/>
+      <MenuList category = {category}/>
       {/* <Check /> */}
       <Footer />
     </div>

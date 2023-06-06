@@ -40,7 +40,7 @@ const StyledRating = styled(Rating)({
 const useStyles = makeStyles((theme) => ({
   menuContainer: {
     overflowY: "auto",
-    paddingBottom:"45px"
+    paddingBottom: "45px",
   },
   buttonHolder: {
     position: "absolute",
@@ -132,8 +132,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     maxWidth: "200px",
     width: "200px",
-    maxHeight:"125px",
-    minHeight:'125px'
+    maxHeight: "125px",
+    minHeight: "125px",
     // height:'auto',
   },
   dishImage: {
@@ -144,21 +144,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MenuList = () => {
+const MenuList = ({ category }) => {
   const dispatch = useDispatch();
   const dirtyItems = useSelector((state) => state.menu.dirtyItems);
   const totalState = useSelector((state) => state.menu);
-  const menuData = useSelector((state) => state.menu.menuItems);
+  let menuData = useSelector((state) => state.menu.menuItems);
 
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [menu, setMenu] = useState();
+  const [filteredMenu, setFilteredMenu] = useState([]);
 
   useEffect(() => {
     axios.get("/api/menuGet").then((response) => {
       let menuData = response.data.map((item) => ({ ...item, quantity: 0 }));
+      setMenu(menuData);
       dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
     });
   }, []);
+
+  useEffect(() => {
+    if (menu) {
+      if (category === "Best Seller") {
+        setFilteredMenu(menuData);
+      } else {
+        menuData = menuData.filter((item) => item.category === category);
+        setFilteredMenu(menuData);
+      }
+    }
+  }, [category,menu,menuData]);
 
   const classes = useStyles();
 
@@ -167,7 +181,6 @@ const MenuList = () => {
       type: UPDATE_QUANTITY,
       payload: { id, quantity, price, name },
     });
-    console.log("the updated quantity:", totalState);
   };
 
   const checkoutPage = () => {
@@ -187,8 +200,8 @@ const MenuList = () => {
     // <ThemeProvider theme={theme}>
     <Grid className={classes.menuContainer} item xs={12}>
       <Grid>
-        {menuData !== ""
-          ? menuData.map((item, key) => {
+        {filteredMenu && filteredMenu !== ""
+          ? filteredMenu.map((item, key) => {
               return (
                 <Grid className="course" key={key}>
                   <Box className={classes.coursePreview}>

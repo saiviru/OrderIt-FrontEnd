@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CircularButton = () => {
+const CircularButton = ({ sendDataToParent }) => {
   const [categories, setCategories] = useState();
 
   useEffect(() => {
@@ -52,7 +52,6 @@ const CircularButton = () => {
           `/api/resCategories/646058aaaf095c028401264a`
         );
         const categories = response.data;
-        console.log( categories.data);
         setCategories(categories.data);
       } catch (err) {
         console.error(err);
@@ -62,6 +61,10 @@ const CircularButton = () => {
   }, []);
 
   const classes = useStyles();
+
+  const CategoryClicked = (category) =>{
+    sendDataToParent(category);
+  }
 
   return (
     <div className={classes.root}>
@@ -74,6 +77,7 @@ const CircularButton = () => {
               color="primary"
               key={i}
               className={classes.circle}
+              onClick={()=>CategoryClicked(category)}
             ></Button>
             <h6 className={classes.categoriesText}>{category}</h6>
           </div>
