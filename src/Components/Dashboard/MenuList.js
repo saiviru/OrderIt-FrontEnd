@@ -156,15 +156,22 @@ const MenuList = ({ category }) => {
   const [filteredMenu, setFilteredMenu] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/menuGet").then((response) => {
-      let menuData = response.data.map((item) => ({ ...item, quantity: 0 }));
+    console.log("am I being called?0", menuData);
+    if(menuData.length>0){
       setMenu(menuData);
-      dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
-    });
+    }
+    else{
+      axios.get("/api/menuGet").then((response) => {
+        let menuData = response.data.map((item) => ({ ...item, quantity: 0 }));
+        setMenu(menuData);
+        dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
+      });
+    }
   }, []);
 
   useEffect(() => {
     if (menu) {
+      console.log("am I being called?")
       if (category === "Best Seller") {
         setFilteredMenu(menuData);
       } else {
@@ -177,6 +184,7 @@ const MenuList = ({ category }) => {
   const classes = useStyles();
 
   const handleQuantityChange = (id, quantity, price, name) => {
+    console.log("the quantity change:",dirtyItems)
     dispatch({
       type: UPDATE_QUANTITY,
       payload: { id, quantity, price, name },

@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AdjustIcon from "@mui/icons-material/Adjust";
-import { UPDATE_QUANTITY } from "../redux/menus/ActionTypes";
+import { UPDATE_QUANTITY,CLEAR_MENU_ITEMS } from "../redux/menus/ActionTypes";
 import {
   Grid,
   Box,
@@ -207,6 +207,9 @@ export const Checkout = () => {
       })
       .then(function (response) {
         console.log("the response:", response);
+        dispatch({
+          type: CLEAR_MENU_ITEMS,
+        });
         setPopup(true);
       })
       .catch(function (error) {
