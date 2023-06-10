@@ -12,6 +12,7 @@ import {Account} from './Components/Auth/Account';
 import {Checkout} from './Components/Dashboard/Checkout'
 import ProtectedComponent from './Components/Auth/ProtectedComponent';
 
+ import NewMenu from "./Components/Dashboard/NewMenu";
 function App() {
   return (
     <main className="App">
@@ -22,7 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/menu" element={<ProtectedComponent><MenuList /></ProtectedComponent>} />
+            <Route path="/menu" element={<ProtectedComponent><NewMenu /></ProtectedComponent>} />
             <Route path="/checkout" element={<ProtectedComponent><Checkout /></ProtectedComponent>} />
             <Route path="/status" element={<ProtectedComponent><Status /></ProtectedComponent>} />
             <Route path="/register" element={<Register />} />

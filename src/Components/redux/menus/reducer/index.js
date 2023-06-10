@@ -13,7 +13,7 @@ export default function menuDetails(state = INITIAL_STATE, action) {
     case ACTIONTYPES.SET_MENU_ITEMS:
       return {
         ...state,
-        menuItems: state.menuItems.concat(action.payload),
+        menuItems: action.payload,
       };
       case ACTIONTYPES.UPDATE_QUANTITY:
         const { id, quantity, price, name } = action.payload;
@@ -29,11 +29,17 @@ export default function menuDetails(state = INITIAL_STATE, action) {
         });
         const dirtyItems = [...state.dirtyItems]; // create a copy of dirtyItems array
         const itemIndex = dirtyItems.findIndex(item => item.id === id);
-        if (itemIndex === -1) {
-            dirtyItems.push({ id, price, name,  quantity: newQuantity });
-        }
-        else {
+        if (newQuantity === 0) {
+          // Remove item from dirtyItems array if quantity is 0
+          if (itemIndex !== -1) {
+            dirtyItems.splice(itemIndex, 1);
+          }
+        } else {
+          if (itemIndex === -1) {
+            dirtyItems.push({ id, price, name, quantity: newQuantity });
+          } else {
             dirtyItems[itemIndex].quantity = newQuantity;
+          }
         }
         const finalCart = dirtyItems.filter(item => item.quantity !== 0);
         return {
@@ -42,6 +48,13 @@ export default function menuDetails(state = INITIAL_STATE, action) {
           dirtyItems,
           finalCart,
         };
+        case ACTIONTYPES.CLEAR_MENU_ITEMS: {
+          return {
+            ...state,
+            menuItems: [],
+            dirtyItems: []
+          };
+        }
     default:
       return state;
   }
