@@ -141,6 +141,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    borderRadius:"10px"
   },
 }));
 
@@ -173,6 +174,8 @@ const MenuList = () => {
   const checkoutPage = () => {
     navigate("/checkout");
   };
+
+ 
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
