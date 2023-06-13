@@ -21,11 +21,11 @@ function App() {
         <Account>
           <Routes>
             <Route element={<ProtectedRoutes redirectPath="/login" />}>
-              <Route index path="/menu" element={<NewMenu />} />
+              {/* <Route index path="/menu" element={<NewMenu />} /> */}
               <Route path="/" element={<Login />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/status" element={<Status />} />
-              <Route path="/ordernow/:id" element={<NewMenu />} />
+              <Route path="/orderit/:id" element={<NewMenu />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

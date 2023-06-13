@@ -13,7 +13,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_QUANTITY } from "../redux/menus/ActionTypes";
-import { GET_URL_DATA } from "../redux/user/ActionTypes";
+import { GET_URL_DATA, UNMASKED_URL_DATA } from "../redux/user/ActionTypes";
 
 import "./MenuList.css";
 import { useParams } from 'react-router-dom';
@@ -147,18 +147,20 @@ const MenuList = ({ category }) => {
   useEffect(()=>{
     if(id){
       dispatch({type:GET_URL_DATA,payload:id});
-      console.log("the store state now:",user)
+      console.log("the store state now:",user);
+      axios.get(`/api/getQrData/${id}`).then((response) => {
+        console.log("the response deducing qr data:",response.data.data);
+        dispatch({type:UNMASKED_URL_DATA,payload:response.data.data});
+      });
     }
   },[])
 
-  
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [menu, setMenu] = useState();
   const [filteredMenu, setFilteredMenu] = useState([]);
 
   useEffect(() => {
-    console.log("am I being called?0", menuData);
     if(menuData.length>0){
       setMenu(menuData);
     }

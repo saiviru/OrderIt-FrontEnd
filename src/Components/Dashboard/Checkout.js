@@ -151,6 +151,9 @@ export const Checkout = () => {
   const [popup, setPopup] = React.useState(false);
   const totalState = useSelector((state) => state.menu);
   const dirtyItems = useSelector((state) => state.menu.dirtyItems);
+
+  const user = useSelector((state) => state.user)
+
   console.log("the state now:", totalState);
   const [popupOpen, setPopupOpen] = useState(false);
 
@@ -202,8 +205,8 @@ export const Checkout = () => {
         items: finalItems,
         totalAmount: totalPrice,
         status: "New",
-        restaurantId: "6176a9a6c0c6e906c36a4d10",
-        userId: "6176a9a6c0c6e906c36a4d10",
+        restaurantId: user.unmaskedData.restaurantId,
+        userId: user.userDetails.sub,
       })
       .then(function (response) {
         console.log("the response:", response);
