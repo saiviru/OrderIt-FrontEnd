@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
   toolUi: {
     background: theme.palette.primary.main + '!important',
+    display:'flex',
+    justifyContent:'flex-end'
   },
   listItem: {
     cursor: 'pointer',
@@ -148,14 +150,14 @@ const Header = () => {
     <div>
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolUi}>
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleSideNavToggle}>
+          {/* <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleSideNavToggle}>
             <MenuIcon sx={{ fontSize: '30px' }} />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+          </IconButton> */}
+          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'flex-start' }}>
             FOODILICIOUS
-          </Typography>
+          </Typography> */}
           <IconButton edge="end" color="inherit" aria-label="profile">
-            <SearchIcon sx={{ fontSize: '30px' }} onClick={handleSearchToggle} />
+            <SearchIcon sx={{ fontSize: '30px', justifyContent: 'flex-end'}} onClick={handleSearchToggle} />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -174,7 +176,7 @@ const Header = () => {
           />
         </div>
       )}
-      <SwipeableDrawer
+       {/* <SwipeableDrawer
         anchor="top"
         open={sideNavOpen}
         onClose={handleSideNavToggle}
@@ -186,7 +188,7 @@ const Header = () => {
           <div className={classes.close}>
             <CloseIcon className={classes.closeIcon} onClose={handleSideNavToggle}/>
           </div>
-          {/* <div className={classes.CoreHeaderMenu}></div> */}
+         
           <div className={classes.listBar}>
             <List>
               <Tooltip title="HOME">
@@ -221,7 +223,7 @@ const Header = () => {
             </IconButton>
           </div>
         </div>
-      </SwipeableDrawer>
+      </SwipeableDrawer>  */}
     </div>
   );
 };

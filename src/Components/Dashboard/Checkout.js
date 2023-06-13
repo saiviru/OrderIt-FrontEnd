@@ -446,14 +446,14 @@ export const Checkout = () => {
           
 
           </Box>
-          <div>
+          {/* <div>
           <a  onClick={handleOpenPopup} style={{
                             color: "blue",
                             // display: "inline",
                             fontSize: "small",
                             marginRight:"100px"
                           }} >Add cooking instructions?</a>
-         </div>
+         </div> */}
           </Box>
        
 
@@ -471,9 +471,9 @@ export const Checkout = () => {
           {popup && (
             <div>
               <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Popup Title</DialogTitle>
+                <DialogTitle>Bon Appetit !!</DialogTitle>
                 <DialogContent dividers>
-                  <p>Your order has been sent successfully!</p>
+                  <p>Your order has been placed successfully!</p>
                 </DialogContent>
                 <DialogActions
                   sx={{
@@ -482,7 +482,7 @@ export const Checkout = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Button onClick={handleClose}>Cancel</Button>
+                  {/* <Button onClick={handleClose}>Cancel</Button> */}
                   <Button onClick={handleClose} autoFocus>
                     OK
                   </Button>
@@ -492,7 +492,7 @@ export const Checkout = () => {
             
           )}
       </div>
-      <Dialog  className={ classes.cookPop} open={popupOpen} onClose={handleClosePopup}>
+      {/* <Dialog  className={ classes.cookPop} open={popupOpen} onClose={handleClosePopup}>
   <DialogTitle>Cooking Instructions</DialogTitle>
   <DialogContent>
     <TextField
@@ -509,7 +509,7 @@ export const Checkout = () => {
       Close
     </Button>
   </DialogActions>
-</Dialog>
+</Dialog> */}
 
     </div>
   );
