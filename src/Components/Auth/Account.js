@@ -9,7 +9,7 @@ const AccountContext = createContext();
 
 const Account = (props) => {
   const dispatch = useDispatch();
-  const { login } = useContext(AuthContext);
+  // const { login } = useContext(AuthContext);
 
   const getSession = async () => {
     await new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ const Account = (props) => {
           } else {
             console.log("the user session from get session:",session.idToken.payload)
             // dispatch({ type: LOGGED_USER, payload: session.idToken.payload })
-            login(session.idToken.jwtToken);
+            // login(session.idToken.jwtToken);
             // setAuthState({
             //   ...setAuthState,
             //   _id:session.idToken.jwtToken,
@@ -53,9 +53,10 @@ const Account = (props) => {
       user.authenticateUser(authDetails, {
         onSuccess: (result) => {
           console.log('login success', result.idToken.payload);
-          console.log("the user from get session:",user);
+          console.log("the user from get session:",user.signInUserSession.accessToken.jwtToken);
+          localStorage.setItem('token', JSON.stringify(result.idToken.jwtToken));
           // dispatch({ type: LOGGED_USER, payload: result.idToken.payload })
-          login(result.idToken.jwtToken);
+          // login(result.idToken.jwtToken);
           resolve(result);
         },
         onFailure: (err) => {

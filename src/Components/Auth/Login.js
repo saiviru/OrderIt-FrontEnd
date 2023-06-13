@@ -37,7 +37,6 @@ export default function Login() {
   const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
   const [confirmed,setConfirmed] = useState(false);
-  const { isAuthenticated } = useContext(AuthContext);
 
   const {authenticate}  = useContext(AccountContext);
 
@@ -60,7 +59,7 @@ export default function Login() {
       .then((data) => {
         console.log("the login data from login:",data);
         // window.location.reload();
-        <Navigate to="/menu" />
+        navigate("/menu")
 		  notify.notifySuccess(toast.loginSuccessful);
       })
       .catch((err) => {
@@ -78,18 +77,18 @@ export default function Login() {
       });
   };
 
-  const logggedSession = async () => {
-    getSession();
-    // console.log("get state:",authState);
-  }
+  // const logggedSession = async () => {
+  //   getSession();
+  //   // console.log("get state:",authState);
+  // }
   
-  useEffect(()=>{
-    logggedSession()
-  },[])
+  // useEffect(()=>{
+  //   logggedSession()
+  // },[])
   
-  if (isAuthenticated) {
-    return <Navigate to="/menu" />;
-  }
+  // if (isAuthenticated) {
+  //   return <Navigate to="/menu" />;
+  // }
 
 
   return (
