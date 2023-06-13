@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import {AccountContext} from './Components/Auth/Account';
 
 
-const ProtectedRoutes = ({ component: Component, ...rest }) => {
+const ProtectedRoutes = ({ component: Component, redirectPath, ...rest }) => {
   const dispatch = useDispatch();
   const {getSession} = useContext(AccountContext);
 

@@ -14,7 +14,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
+    devTools: process.env.REACT_APP_NODE_ENV !== 'production',
     middleware: [sagaMiddleware]
   });
 

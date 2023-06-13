@@ -2,8 +2,7 @@ import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import { createContext,useContext, useEffect } from 'react';
 import UserPool from '../../UserPool';
 import { useDispatch } from 'react-redux';
-import { AuthContext } from './GlobalStates';
-
+import { USER_DETAILS } from '../redux/user/ActionTypes'
 
 const AccountContext = createContext();
 
@@ -20,7 +19,7 @@ const Account = (props) => {
             reject(err);
           } else {
             console.log("the user session from get session:",session.idToken.payload)
-            // dispatch({ type: LOGGED_USER, payload: session.idToken.payload })
+            dispatch({ type: USER_DETAILS, payload: session.idToken.payload })
             // login(session.idToken.jwtToken);
             // setAuthState({
             //   ...setAuthState,

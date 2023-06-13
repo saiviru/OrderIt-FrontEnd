@@ -13,8 +13,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_QUANTITY } from "../redux/menus/ActionTypes";
+import { GET_URL_DATA } from "../redux/user/ActionTypes";
+
 import "./MenuList.css";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useParams } from 'react-router-dom';
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -24,18 +26,6 @@ const StyledRating = styled(Rating)({
     color: "#ff3d47",
   },
 });
-
-// const theme = createTheme({
-//   components: {
-//     Box: {
-//       defaultProps: {
-//         padding: 0,
-
-//       },
-//     },
-//   },
-//   palette: {},
-// });
 
 const useStyles = makeStyles((theme) => ({
   menuContainer: {
@@ -148,8 +138,20 @@ const MenuList = ({ category }) => {
   const dispatch = useDispatch();
   const dirtyItems = useSelector((state) => state.menu.dirtyItems);
   const totalState = useSelector((state) => state.menu);
+  const user = useSelector((state) => state.user)
   let menuData = useSelector((state) => state.menu.menuItems);
+  // const store = useSelector((state) => state)
 
+  const {id} = useParams();
+
+  useEffect(()=>{
+    if(id){
+      dispatch({type:GET_URL_DATA,payload:id});
+      console.log("the store state now:",user)
+    }
+  },[])
+
+  
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [menu, setMenu] = useState();
