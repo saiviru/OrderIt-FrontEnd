@@ -205,8 +205,9 @@ export const Checkout = () => {
         items: finalItems,
         totalAmount: totalPrice,
         status: "New",
-        restaurantId: user.unmaskedData.restaurantId,
+        restaurantId: user.unmaskedData.rid,
         userId: user.userDetails.sub,
+        table: user.unmaskedData.tableNumber
       })
       .then(function (response) {
         console.log("the response:", response);
