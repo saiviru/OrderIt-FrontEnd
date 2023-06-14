@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AdjustIcon from "@mui/icons-material/Adjust";
-import { UPDATE_QUANTITY,CLEAR_MENU_ITEMS } from "../redux/menus/ActionTypes";
+import { UPDATE_QUANTITY, CLEAR_MENU_ITEMS } from "../redux/menus/ActionTypes";
 import {
   Grid,
   Box,
@@ -233,7 +233,8 @@ export const Checkout = () => {
   return (
     <div>
       <Header />
-      {/* <Box className={classes.root}>
+      <div>
+        {/* <Box className={classes.root}>
         <Grid item xs={12} md={6}>
           <div className={classes.cart}>
             {" "}
@@ -324,35 +325,35 @@ export const Checkout = () => {
         </Grid>
       </Box> */}
 
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box className={classes.boxContainer}>
-          <div className={classes.cart}>
-            {" "}
-            <Button
-              // variant="outlined"
-              color="primary"
-              className={classes.backButton}
-              startIcon={<ArrowBackIcon />}
-              onClick={handleGoBack}
-            ></Button>
-            <Typography
-              sx={{ ml: "40px", textAlign: "center" }}
-              variant="h6"
-              component="div"
-            >
-              View Order
-            </Typography>
-          </div>
-          <Box className={classes.boxList}>
-            {totalState.dirtyItems !== ""
-              ? totalState.dirtyItems.map((item) => {
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Box className={classes.boxContainer}>
+            <div className={classes.cart}>
+              {" "}
+              <Button
+                // variant="outlined"
+                color="primary"
+                className={classes.backButton}
+                startIcon={<ArrowBackIcon />}
+                onClick={handleGoBack}
+              ></Button>
+              <Typography
+                sx={{ ml: "40px", textAlign: "center" }}
+                variant="h6"
+                component="div"
+              >
+                View Order
+              </Typography>
+            </div>
+            <Box className={classes.boxList}>
+              {totalState.dirtyItems !== ""
+                ? totalState.dirtyItems.map((item) => {
                   return (
                     <div className={classes.orderItem}>
                       <div className={classes.singleItem}>
@@ -387,7 +388,7 @@ export const Checkout = () => {
                         >
                           -
                         </Box>{" "}
-                        {item.quantity}{" "} 
+                        {item.quantity}{" "}
                         <Box
                           component="button"
                           className={classes.addButtons}
@@ -413,22 +414,54 @@ export const Checkout = () => {
                     </div>
                   );
                 })
-              : null}
+                : null}
+            </Box>
+            {/* <div>
+          <a  onClick={handleOpenPopup} style={{
+                            color: "blue",
+                            // display: "inline",
+                            fontSize: "small",
+                            marginRight:"100px"
+                          }} >Add cooking instructions?</a>
+         </div> */}
           </Box>
-          <div>
-            <a
-              onClick={handleOpenPopup}
-              style={{
-                color: "blue",
-                // display: "inline",
-                fontSize: "small",
-                marginRight: "100px",
-              }}
+
+
+          <div className={classes.footer}>
+            <Button
+              className={classes.orderButton}
+              variant="contained"
+              color="primary"
+              onClick={placeOrder}
+
             >
               Add cooking instructions?
-            </a>
+            </Button>
           </div>
-        </Box>
+          {popup && (
+            <div>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Bon Appetit !!</DialogTitle>
+                <DialogContent dividers>
+                  <p>Your order has been placed successfully!</p>
+                </DialogContent>
+                <DialogActions
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* <Button onClick={handleClose}>Cancel</Button> */}
+                  <Button onClick={handleClose} autoFocus>
+                    OK
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+
+          )}
+        </div>
 
         <div className={classes.footer}>
           <Button
@@ -476,7 +509,7 @@ export const Checkout = () => {
             rows={4}
             variant="outlined"
             fullWidth
-            // Add any necessary props or event handlers
+          // Add any necessary props or event handlers
           />
         </DialogContent>
         <DialogActions>

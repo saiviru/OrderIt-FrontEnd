@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ListIcon from '@mui/icons-material/List';
 import NewsIcon from '@mui/icons-material/Announcement';
 import theme from '../../theme';
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -26,18 +27,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Footer = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const OrderStatus = () => {
+    navigate("/orderStatus");
+  };
+  const Home = () => {
+    navigate("/menu");
+  };
+
+
 
   return (
     <BottomNavigation value={value} onChange={handleChange} className={classes.footer}>
-      <BottomNavigationAction className={classes.footerIcons} label="Home" icon={<HomeIcon className={classes.icon} />} />
-      <BottomNavigationAction className={classes.footerIcons} label="News" icon={<NewsIcon className={classes.icon}  />} />
-      <BottomNavigationAction className={classes.footerIcons} label="List" icon={<ListIcon className={classes.icon}  />} />
+      <BottomNavigationAction onClick={Home} className={classes.footerIcons} label="Home" icon={<HomeIcon className={classes.icon} />} />
+      {/* <BottomNavigationAction className={classes.footerIcons} label="News" icon={<NewsIcon className={classes.icon}  />} /> */}
+      <BottomNavigationAction onClick={OrderStatus} className={classes.footerIcons} label="List" icon={<ListIcon className={classes.icon}  />} />
     </BottomNavigation>
   );
 };

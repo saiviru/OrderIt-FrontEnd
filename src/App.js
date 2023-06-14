@@ -11,6 +11,12 @@ import { Account } from "./Components/Auth/Account";
 import { Checkout } from "./Components/Dashboard/Checkout";
 // import ProtectedComponent from './Components/Auth/ProtectedComponent';
 import ProtectedRoutes from "./ProtectedRoutes";
+import AuthContextProvider from "./Components/Auth/GlobalStates";
+import ProtectedComponent from './Components/Auth/ProtectedComponent';
+import OrderStatus from "./Components/Dashboard/OrderStatus";
+import Profile from "./Components/Dashboard/Profile";
+import OrderHistory from "./Components/Dashboard/OrderHistory";
+
 
 import NewMenu from "./Components/Dashboard/NewMenu";
 function App() {
@@ -31,6 +37,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/confirmEmail" element={<ConfirmEmail />} />
+            <Route path="/orderStatus" element={<OrderStatus />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orderHistory" element={<OrderHistory/>} />
+           
+
           </Routes>
         </Account>
       </Router>

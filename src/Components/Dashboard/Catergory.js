@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center"
   },
   categoriesText:{
-    marginTop:'6px'
+    marginTop:'6px',
+    textAlign:''
   },
   circle: {
     borderRadius: "50% !important",
