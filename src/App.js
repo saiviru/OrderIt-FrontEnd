@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom
 import { ToastContainer } from "react-toastify";
 import { Account } from "./Components/Auth/Account";
 import { Checkout } from "./Components/Dashboard/Checkout";
+import ViewQR from "./Components/Dashboard/ViewQR";
 // import ProtectedComponent from './Components/Auth/ProtectedComponent';
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/menu" element={<NewMenu />} />
               <Route path="/orderit/:id" element={<NewMenu />} />
+              <Route path="/viewQR" element ={<ViewQR />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
