@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {AccountContext} from './Components/Auth/Account';
 
@@ -9,6 +9,7 @@ const ProtectedRoutes = ({ component: Component, redirectPath, ...rest }) => {
   const {getSession} = useContext(AccountContext);
 
   const location = useLocation();
+  const navigate = useNavigate();
   let session = getSession();
   console.log("the user serrion:",localStorage.getItem("token"))
   const token = localStorage.getItem("token");
@@ -36,8 +37,9 @@ if (session && session.exp > Date.now() / 1000) {
     console.log("who is who? true",session)
     return <Outlet />;
   } else {
-    console.log("who is who?",redirectPath)
-    return <Navigate to={redirectPath} replace />;
+    console.log("who is who?",redirectPath);
+    const currentPath = location.pathname;
+    return <Navigate to={redirectPath} replace  state= { currentPath }/>;
   }
   
 };

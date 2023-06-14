@@ -16,7 +16,7 @@ import { makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { AccountContext } from './Account';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import * as toast from '../../constants/ToastConstants';
 import * as notify from '../../constants/ToastCaller';
@@ -37,11 +37,15 @@ export default function Login() {
   const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
   const [confirmed,setConfirmed] = useState(false);
+  const {state} = useLocation();
+  // const { from } = state;
 
   const {authenticate}  = useContext(AccountContext);
 
   const {getSession} = useContext(AccountContext);
   const navigate = useNavigate();
+
+ console.log("the url passed:", state)
 
 	const classes = useStyles();
 
@@ -54,12 +58,15 @@ export default function Login() {
 
   const handleLogin = (event) => {
     // event.preventDefault();
-    // console.log("the authenticate from account:",authenticate);
+    
     authenticate(email, password)
       .then((data) => {
         console.log("the login data from login:",data);
         // window.location.reload();
-        navigate("/menu")
+        if(state)
+          navigate(state)
+        else
+          navigate("/orderit")
 		  notify.notifySuccess(toast.loginSuccessful);
       })
       .catch((err) => {
