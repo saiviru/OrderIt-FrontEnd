@@ -38,6 +38,7 @@ function App() {
           </Routes>
         </Account>
       </Router>
+
       {/* </AuthContext> */}
       <ToastContainer style={{ fontSize: "1rem" }} />
     </main>
