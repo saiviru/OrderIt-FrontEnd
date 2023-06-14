@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import { Account } from "./Components/Auth/Account";
 import { Checkout } from "./Components/Dashboard/Checkout";
 import ViewQR from "./Components/Dashboard/ViewQR";
+import ListQR from "./Components/Dashboard/ListQR";
 // import ProtectedComponent from './Components/Auth/ProtectedComponent';
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -28,7 +29,8 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/menu" element={<NewMenu />} />
               <Route path="/orderit/:id" element={<NewMenu />} />
-              <Route path="/viewQR" element ={<ViewQR />} />
+              <Route path="/viewQR/:id" element ={<ViewQR />} />
+              <Route path="/listQR/:id" element ={<ListQR />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

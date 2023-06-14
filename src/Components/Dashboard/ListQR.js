@@ -1,27 +1,60 @@
-import { Card, CardMedia, makeStyles } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const useStyles = makeStyles({
-  card: {
-    maxWidth: 300,
-  },
-  media: {
-    height: 200,
-  },
-});
+const data = [
+  { id: 1, name: 'Item 1', description: 'Description 1', price: '$10' },
+  { id: 2, name: 'Item 2', description: 'Description 2', price: '$20' },
+  { id: 3, name: 'Item 3', description: 'Description 3', price: '$30' },
+  { id: 4, name: 'Item 4', description: 'Description 4', price: '$40' },
+];
 
-const ImageCard = () => {
-  const classes = useStyles();
+const ListQR = () => {
+
+  const [qrdata,setQrdata] = useState([]);
+  const navigate = useNavigate();
+
+  const {id} = useParams();
+
+  useEffect(()=>{
+    if(id){
+      // dispatch({type:GET_URL_DATA,payload:id});
+      console.log("the id now:",id);
+      axios.get(`/api/getAllQrData/${id}`).then((response) => {
+        console.log("the response deducing qr data:",response.data.data);
+        setQrdata(response.data.data)
+        // dispatch({type:UNMASKED_URL_DATA,payload:response.data.data});
+      });
+    }
+  },[])
+
+  const handleRowClick = (uniqueId) => {
+    navigate(`/viewQR/${uniqueId}`);
+  };
 
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        component="img"
-        src="data:image/png;base64,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"
-        alt="Base64 Image"
-      />
-    </Card>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Table Number</TableCell>
+            <TableCell>Url</TableCell>
+            <TableCell>Unique ID</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {qrdata.map((item) => (
+            <TableRow key={item.uniqueId} onClick={() => handleRowClick(item.uniqueId)}>
+              <TableCell>{item.tableNumber}</TableCell>
+              <TableCell>{item.maskedUrl}</TableCell>
+              <TableCell>{item.uniqueId}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-export default ImageCard;
+export default ListQR;
