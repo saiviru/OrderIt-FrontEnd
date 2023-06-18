@@ -13,11 +13,11 @@ import { ThemeProvider } from '@mui/styles';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    {/* <PersistGate loading={null} persistor={persistor}> */}
+    <PersistGate loading={null} persistor={persistor}>
     <ThemeProvider theme={theme}>
     <App />
     </ThemeProvider> 
-    {/* </PersistGate> */}
+    </PersistGate>
   </Provider>
 );
 

@@ -25,7 +25,7 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-          FOODILICIOUS
+          
         </Typography>
         <IconButton edge="end" color="inherit" aria-label="profile">
           <AccountCircleIcon />
