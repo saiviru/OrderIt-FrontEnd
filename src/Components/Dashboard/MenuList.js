@@ -30,7 +30,8 @@ const StyledRating = styled(Rating)({
 const useStyles = makeStyles((theme) => ({
   menuContainer: {
     overflowY: "auto",
-    paddingBottom: "45px",
+    paddingBottom: "125px",
+    // marginBottom:'200px'
   },
   buttonHolder: {
     position: "absolute",
