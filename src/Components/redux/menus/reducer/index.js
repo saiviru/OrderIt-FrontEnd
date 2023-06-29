@@ -3,9 +3,11 @@ import * as ACTIONTYPES from "../ActionTypes";
 
 const INITIAL_STATE = {
     menuItems: [],
+    search:'',
     cartItems: [],
     dirtyItems: [],
-    finalCart:[]
+    finalCart:[],
+    userOrders:[]
 };
 
 export default function menuDetails(state = INITIAL_STATE, action) {
@@ -15,6 +17,16 @@ export default function menuDetails(state = INITIAL_STATE, action) {
         ...state,
         menuItems: action.payload,
       };
+      case ACTIONTYPES.SET_SEARCH:
+        return{
+          ...state,
+          search:action.payload
+        }
+      case ACTIONTYPES.USER_ORDERS:
+        return{
+          ...state,
+          userOrders:payload
+        }
       case ACTIONTYPES.UPDATE_QUANTITY:
         const { id, quantity, price, name } = action.payload;
         const newQuantity = quantity >= 0 ? quantity : 0; // quantity should never be negative

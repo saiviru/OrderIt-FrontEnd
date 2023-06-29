@@ -1,50 +1,42 @@
-import React, {useState} from "react";
-// import AppBar from '@mui/material/AppBar';
-// import Box from '@mui/material/Box';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import Button from '@mui/material/Button';
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
+import React, { useState } from "react";
 import { makeStyles } from '@mui/styles';
 import Header from "./Header";
 import Catergory from "./Catergory";
-// import Search from "./Search";
 import MenuList from "./MenuList";
+import OrderStatus from "./OrderStatus";
 import Footer from "./Footer";
-// import Check from "./Check";
-
-const useStyles = makeStyles((theme) => ({
-  menuList: {
-    
-    // width:'full',
-   
-  },
-  // searchInput: {
-  //   // marginLeft: theme.spacing(1),
-  //   flex: 1,
-  // },
-}));
-
 
 const NewMenu = () => {
   const [category, setCategoty] = useState('Best Seller');
+  const [footerActive, setFooterActiveTab] = useState('');
 
-  const classes = useStyles();
 
   const handleDataFromChild = (data) => {
     setCategoty(data);
   };
+
+  const handleFooterActiveTab = (data) => {
+    setFooterActiveTab(data)
+  }
   return (
-   
-    <div className={classes.menuList} >
+
+    <div >
       {" "}
       <Header />
-       {/* <Search /> */}
-      <Catergory sendDataToParent={handleDataFromChild}/>
-      <MenuList category = {category}/>
-      {/* <Check /> */}
-      <Footer />
+      {
+        footerActive === 'orderList' ? (
+          <div>
+            <OrderStatus />
+          </div>
+        ) :
+          (
+            <div>
+              <Catergory sendDataToParent={handleDataFromChild} />
+              <MenuList category={category} />
+            </div>
+          )
+      }
+      <Footer footerActiveTab={handleFooterActiveTab} />
     </div>
   );
 };
