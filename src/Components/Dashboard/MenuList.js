@@ -132,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    borderRadius:"10px"
   },
 }));
 
@@ -141,6 +142,7 @@ const MenuList = ({ category }) => {
   const totalState = useSelector((state) => state.menu);
   const user = useSelector((state) => state.user)
   let menuData = useSelector((state) => state.menu.menuItems);
+  let searchTerm = totalState.search;
   // const store = useSelector((state) => state)
 
   const {id} = useParams();
@@ -164,11 +166,13 @@ const MenuList = ({ category }) => {
   useEffect(() => {
     if(menuData.length>0){
       setMenu(menuData);
+      console.log("menu items:",menu)
     }
     else{
       axios.get("/api/menuGet").then((response) => {
         let menuData = response.data.map((item) => ({ ...item, quantity: 0 }));
         setMenu(menuData);
+        console.log("menu items:",menu)
         dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
       });
     }
@@ -186,6 +190,15 @@ const MenuList = ({ category }) => {
     }
   }, [category,menu,menuData]);
 
+  useEffect(() =>{
+    console.log("the total state:",totalState,searchTerm)
+    if(searchTerm){
+      menuData = menuData.filter((item) => item.itemName.toLowerCase().includes(searchTerm.toLowerCase()));
+      console.log("the filtered search menu:",menuData);
+      setFilteredMenu(menuData);
+    }
+  },[searchTerm])
+
   const classes = useStyles();
 
   const handleQuantityChange = (id, quantity, price, name) => {
@@ -199,6 +212,8 @@ const MenuList = ({ category }) => {
   const checkoutPage = () => {
     navigate("/checkout");
   };
+
+ 
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
