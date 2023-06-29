@@ -480,6 +480,9 @@ export const Checkout = () => {
           />
         </DialogContent>
         <DialogActions>
+        <Button onClick={handleClosePopup} color="primary">
+           Save
+          </Button>
           <Button onClick={handleClosePopup} color="primary">
             Close
           </Button>
