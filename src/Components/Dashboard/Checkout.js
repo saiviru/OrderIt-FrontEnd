@@ -415,76 +415,71 @@ export const Checkout = () => {
                 })
               : null}
           </Box>
-          <div>
-            <a
-              onClick={handleOpenPopup}
-              style={{
-                color: "blue",
-                // display: "inline",
-                fontSize: "small",
-                marginRight: "100px",
-              }}
-            >
-              Add cooking instructions?
-            </a>
-          </div>
-        </Box>
+          {/* <div>
+          <a  onClick={handleOpenPopup} style={{
+                            color: "blue",
+                            // display: "inline",
+                            fontSize: "small",
+                            marginRight:"100px"
+                          }} >Add cooking instructions?</a>
+         </div> */}
+          </Box>
+       
 
-        <div className={classes.footer}>
-          <Button
-            className={classes.orderButton}
-            variant="contained"
-            color="primary"
-            onClick={placeOrder}
-          >
-            Place Order
-          </Button>
-        </div>
-        {popup && (
-          <div>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Popup Title</DialogTitle>
-              <DialogContent dividers>
-                <p>Your order has been sent successfully!</p>
-              </DialogContent>
-              <DialogActions
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose} autoFocus>
-                  OK
-                </Button>
-              </DialogActions>
-            </Dialog>
+          <div className={classes.footer}>
+            <Button
+              className={classes.orderButton}
+              variant="contained"
+              color="primary"
+              onClick={placeOrder}
+             
+            >
+              Place Order
+            </Button>
           </div>
-        )}
+          {popup && (
+            <div>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Bon Appetit !!</DialogTitle>
+                <DialogContent dividers>
+                  <p>Your order has been placed successfully!</p>
+                </DialogContent>
+                <DialogActions
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* <Button onClick={handleClose}>Cancel</Button> */}
+                  <Button onClick={handleClose} autoFocus>
+                    OK
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+            
+          )}
       </div>
-      <Dialog
-        className={classes.cookPop}
-        open={popupOpen}
-        onClose={handleClosePopup}
-      >
-        <DialogTitle>Cooking Instructions</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Instructions"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-            // Add any necessary props or event handlers
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClosePopup} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {/* <Dialog  className={ classes.cookPop} open={popupOpen} onClose={handleClosePopup}>
+  <DialogTitle>Cooking Instructions</DialogTitle>
+  <DialogContent>
+    <TextField
+      label="Instructions"
+      multiline
+      rows={4}
+      variant="outlined"
+      fullWidth
+      // Add any necessary props or event handlers
+    />
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClosePopup} color="primary">
+      Close
+    </Button>
+  </DialogActions>
+</Dialog> */}
+
     </div>
   );
 };
