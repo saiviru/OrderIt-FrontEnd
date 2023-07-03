@@ -142,7 +142,7 @@ const MenuList = ({ category }) => {
   const user = useSelector((state) => state.user)
   let menuData = useSelector((state) => state.menu.menuItems);
   let searchTerm = totalState.search;
-  // const store = useSelector((state) => state)
+  let rId = user.unmaskedData.rid;
 
   const {id} = useParams();
 
@@ -163,19 +163,13 @@ const MenuList = ({ category }) => {
   const [filteredMenu, setFilteredMenu] = useState([]);
 
   useEffect(() => {
-    if(menuData.length>0){
-      setMenu(menuData);
-      console.log("menu items:",menu)
-    }
-    else{
-      axios.get("/api/menuGet").then((response) => {
-        let menuData = response.data.map((item) => ({ ...item, quantity: 0 }));
+      axios.get("/api/getMenu/"+rId).then((response) => {
+        let menuData = response.data.data.map((item) => ({ ...item, quantity: 0 }));
         setMenu(menuData);
         console.log("menu items:",menu)
         dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
       });
-    }
-  }, []);
+  }, [rId]);
 
   useEffect(() => {
     if (menu) {
