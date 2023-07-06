@@ -4,8 +4,6 @@ import Footer from './Footer';
 import { makeStyles } from '@mui/styles';
 import { Typography } from "@mui/material";
 
-
-
 const useStyles = makeStyles((theme) => ({
     cart: {
         display: "flex",

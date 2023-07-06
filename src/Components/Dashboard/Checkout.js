@@ -152,7 +152,9 @@ export const Checkout = () => {
   const totalState = useSelector((state) => state.menu);
   const dirtyItems = useSelector((state) => state.menu.dirtyItems);
 
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
+  let rId = user.unmaskedData.rid;
+
 
   console.log("the state now:", totalState);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -201,13 +203,14 @@ export const Checkout = () => {
       totalPrice += parseFloat(indPrice);
     });
     axios
-      .post("/api/orders", {
+      .post("/api/postOrder", {
         items: finalItems,
         totalAmount: totalPrice,
         status: "New",
         restaurantId: user.unmaskedData.rid,
         userId: user.userDetails.sub,
-        table: user.unmaskedData.tableNumber
+        table: user.unmaskedData.tableNumber,
+        rId
       })
       .then(function (response) {
         console.log("the response:", response);

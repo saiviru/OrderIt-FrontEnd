@@ -10,7 +10,6 @@ const NewMenu = () => {
   const [category, setCategoty] = useState('Best Seller');
   const [footerActive, setFooterActiveTab] = useState('');
 
-
   const handleDataFromChild = (data) => {
     setCategoty(data);
   };
