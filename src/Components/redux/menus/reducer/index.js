@@ -25,7 +25,7 @@ export default function menuDetails(state = INITIAL_STATE, action) {
       case ACTIONTYPES.USER_ORDERS:
         return{
           ...state,
-          userOrders:payload
+          userOrders:action.payload
         }
       case ACTIONTYPES.UPDATE_QUANTITY:
         const { id, quantity, price, name } = action.payload;

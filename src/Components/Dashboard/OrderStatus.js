@@ -69,13 +69,7 @@ const OrderStatus = () => {
 
 
   useEffect(() => {
-    if (userStateOrders && userStateOrders.length > 0) {
-      setUserOrders(userStateOrders);
-      console.log("menu items:", userOrders)
-    }
-    else {
-      axios.get("/api/userOrders/" + user.userDetails.sub).then((response) => {
-        setUserOrders(response.data);
+      axios.get("/api/getUserOrder/" + user.userDetails.sub).then((response) => {
         const today = new Date();
         const todaysOrders = response.data.filter((order) => {
           const orderDate = new Date(order.createdAt);
@@ -84,9 +78,10 @@ const OrderStatus = () => {
             orderDate.getMonth() === today.getMonth()
           );
         });
-        dispatch({ type: "userOrders", payload: todaysOrders });
+      console.log("Ordered today:", todaysOrders)
+      setUserOrders(todaysOrders);
+        dispatch({ type: "USER_ORDERS", payload: todaysOrders });
       });
-    }
   }, []);
 
   return (
