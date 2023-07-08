@@ -145,7 +145,10 @@ const MenuList = ({ category }) => {
   let searchTerm = totalState.search;
   let rId = user.unmaskedData.rid;
 
-  const { id } = useParams();
+  const [limitedMenu, setLimitedMenu] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+
+  const {id} = useParams();
 
   useEffect(() => {
     if (id) {
@@ -158,14 +161,24 @@ const MenuList = ({ category }) => {
         dispatch({type:CLEAR_MENU_ITEMS})
       }
     }
-  }, [id])
+  },[]);
+
+  const fetchData = () => {
+    // Simulate API call or fetch data from your data source
+    // Append new data to the existing data
+    // For this example, let's append some dummy data
+    const newData = filteredMenu;
+
+    // Update the data state and determine if there is more data to load
+    setData([...data, ...newData]);
+    setHasMore(data.length < 50); // Load more data until 50 items are reached
+  };
 
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [menu, setMenu] = useState();
   const [filteredMenu, setFilteredMenu] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
   const pageSize = 10; // Number of items to load per page
 
   useEffect(() => {
