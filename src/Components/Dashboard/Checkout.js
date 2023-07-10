@@ -156,7 +156,6 @@ export const Checkout = () => {
   let rId = user.unmaskedData.rid;
 
 
-  console.log("the state now:", totalState);
   const [popupOpen, setPopupOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -213,7 +212,6 @@ export const Checkout = () => {
         rId
       })
       .then(function (response) {
-        console.log("the response:", response);
         dispatch({
           type: CLEAR_MENU_ITEMS,
         });
@@ -230,7 +228,6 @@ export const Checkout = () => {
       type: UPDATE_QUANTITY,
       payload: { id, quantity, price, name },
     });
-    console.log("the updated quantity:", totalState);
   };
 
   return (
@@ -355,9 +352,9 @@ export const Checkout = () => {
           </div>
           <Box className={classes.boxList}>
             {totalState.dirtyItems !== ""
-              ? totalState.dirtyItems.map((item) => {
+              ? totalState.dirtyItems.map((item,key) => {
                   return (
-                    <div className={classes.orderItem}>
+                    <div className={classes.orderItem} key={key}>
                       <div className={classes.singleItem}>
                         {" "}
                         <AdjustIcon

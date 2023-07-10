@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_QUANTITY } from "../redux/menus/ActionTypes";
 import { GET_URL_DATA, UNMASKED_URL_DATA } from "../redux/user/ActionTypes";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import "./MenuList.css";
 import { useParams } from 'react-router-dom';
@@ -131,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    borderRadius:"10px"
+    borderRadius: "10px"
   },
 }));
 
@@ -144,58 +145,57 @@ const MenuList = ({ category }) => {
   let searchTerm = totalState.search;
   let rId = user.unmaskedData.rid;
 
-  const {id} = useParams();
+  const { id } = useParams();
 
-  useEffect(()=>{
-    if(id){
-      dispatch({type:GET_URL_DATA,payload:id});
-      console.log("the store state now:",user);
+  useEffect(() => {
+    if (id) {
+      dispatch({ type: GET_URL_DATA, payload: id });
       axios.get(`/api/getQrData/${id}`).then((response) => {
-        console.log("the response deducing qr data:",response.data.data);
-        dispatch({type:UNMASKED_URL_DATA,payload:response.data.data});
+        dispatch({ type: UNMASKED_URL_DATA, payload: response.data.data });
       });
     }
-  },[])
+  }, [menuData])
 
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [menu, setMenu] = useState();
   const [filteredMenu, setFilteredMenu] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const pageSize = 10; // Number of items to load per page
 
   useEffect(() => {
-      axios.get("/api/getMenu/"+rId).then((response) => {
-        let menuData = response.data.data.map((item) => ({ ...item, quantity: 0 }));
-        setMenu(menuData);
-        console.log("menu items:",menu)
-        dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
-      });
+    axios.get("/api/getMenu/" + rId).then((response) => {
+      let menuData = response.data.data.map((item) => ({ ...item, quantity: 0 }));
+      setMenu(menuData);
+      dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
+      setHasMore(menuData.length > pageSize);
+      setFilteredMenu(menuData.slice(0, pageSize));
+    });
   }, [rId]);
 
   useEffect(() => {
     if (menu) {
-      console.log("am I being called?")
       if (category === "Best Seller") {
-        setFilteredMenu(menuData);
+        fetchMoreData()
       } else {
         menuData = menuData.filter((item) => item.category === category);
         setFilteredMenu(menuData);
+        setHasMore(false);
       }
     }
-  }, [category,menu,menuData]);
+  }, [category, menu, menuData]);
 
-  useEffect(() =>{
-    console.log("the total state:",totalState,searchTerm)
-    if(searchTerm){
+  useEffect(() => {
+    if (searchTerm) {
       menuData = menuData.filter((item) => item.itemName.toLowerCase().includes(searchTerm.toLowerCase()));
-      console.log("the filtered search menu:",menuData);
       setFilteredMenu(menuData);
     }
-  },[searchTerm])
+  }, [searchTerm])
 
   const classes = useStyles();
 
   const handleQuantityChange = (id, quantity, price, name) => {
-    console.log("the quantity change:",dirtyItems)
     dispatch({
       type: UPDATE_QUANTITY,
       payload: { id, quantity, price, name },
@@ -206,7 +206,7 @@ const MenuList = ({ category }) => {
     navigate("/checkout");
   };
 
- 
+
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -217,12 +217,30 @@ const MenuList = ({ category }) => {
     0
   );
 
+  const fetchMoreData = () => {
+    setTimeout(() => {
+      const endIndex = startIndex + pageSize;
+      console.log("the menu data in fetchmoredata:",menuData)
+      const newItems = menuData.slice(startIndex, endIndex);
+      setFilteredMenu((prevItems) => [...prevItems, ...newItems]);
+      setStartIndex(endIndex);
+      setHasMore(menuData.length > endIndex);
+    }, 500); // Simulating delay for API call
+  };
+
   return (
     // <ThemeProvider theme={theme}>
     <Grid className={classes.menuContainer} item xs={12}>
-      <Grid>
-        {filteredMenu && filteredMenu !== ""
-          ? filteredMenu.map((item, key) => {
+      <InfiniteScroll
+        dataLength={filteredMenu.length} // Length of the data array
+        next={fetchMoreData} // Function to load more data
+        hasMore={hasMore} // Whether there is more data to load
+        loader={<h4>Loading...</h4>} // Loader component displayed while loading
+        endMessage={<p>That's all folks!.</p>} // Message displayed when all data is loaded
+      >
+        <Grid>
+          {filteredMenu && filteredMenu !== ""
+            ? filteredMenu.map((item, key) => {
               return (
                 <Grid className="course" key={key}>
                   <Box className={classes.coursePreview}>
@@ -322,8 +340,9 @@ const MenuList = ({ category }) => {
                 </Grid>
               );
             })
-          : null}
-      </Grid>
+            : null}
+        </Grid>
+      </InfiniteScroll>
       {selectedItemCount > 0 && (
         <div className={classes.popup}>
           <h4>Items selected: </h4> ({selectedItemCount} items)
