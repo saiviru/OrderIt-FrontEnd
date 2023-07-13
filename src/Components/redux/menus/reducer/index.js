@@ -28,7 +28,8 @@ export default function menuDetails(state = INITIAL_STATE, action) {
           userOrders:action.payload
         }
       case ACTIONTYPES.UPDATE_QUANTITY:
-        const { id, quantity, price, name } = action.payload;
+        const { rId, id, quantity, price, name } = action.payload;
+        console.log("on update reducer:",{ rId, id, quantity, price, name })
         const newQuantity = quantity >= 0 ? quantity : 0; // quantity should never be negative
         const menuItems = state.menuItems.map(item => {
           if (item._id === id) {
@@ -48,7 +49,7 @@ export default function menuDetails(state = INITIAL_STATE, action) {
           }
         } else {
           if (itemIndex === -1) {
-            dirtyItems.push({ id, price, name, quantity: newQuantity });
+            dirtyItems.push({ rId, id, price, name, quantity: newQuantity });
           } else {
             dirtyItems[itemIndex].quantity = newQuantity;
           }
@@ -63,7 +64,6 @@ export default function menuDetails(state = INITIAL_STATE, action) {
         case ACTIONTYPES.CLEAR_MENU_ITEMS: {
           return {
             ...state,
-            menuItems: [],
             dirtyItems: []
           };
         }

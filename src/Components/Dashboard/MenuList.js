@@ -12,7 +12,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UPDATE_QUANTITY } from "../redux/menus/ActionTypes";
+import { UPDATE_QUANTITY, CLEAR_MENU_ITEMS } from "../redux/menus/ActionTypes";
 import { GET_URL_DATA, UNMASKED_URL_DATA } from "../redux/user/ActionTypes";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -153,8 +153,12 @@ const MenuList = ({ category }) => {
       axios.get(`/api/getQrData/${id}`).then((response) => {
         dispatch({ type: UNMASKED_URL_DATA, payload: response.data.data });
       });
+      if(dirtyItems.rId !== rId){
+        console.log("the rid in matching:",rId,dirtyItems.rId)
+        dispatch({type:CLEAR_MENU_ITEMS})
+      }
     }
-  }, [menuData])
+  }, [id])
 
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -177,7 +181,7 @@ const MenuList = ({ category }) => {
   useEffect(() => {
     if (menu) {
       if (category === "Best Seller") {
-        fetchMoreData()
+        // fetchMoreData()
       } else {
         menuData = menuData.filter((item) => item.category === category);
         setFilteredMenu(menuData);
@@ -195,11 +199,20 @@ const MenuList = ({ category }) => {
 
   const classes = useStyles();
 
-  const handleQuantityChange = (id, quantity, price, name) => {
+  const handleQuantityChange = ( id, quantity, price, name) => {
     dispatch({
       type: UPDATE_QUANTITY,
-      payload: { id, quantity, price, name },
+      payload: { rId ,id, quantity, price, name },
     });
+
+    const updatedFilteredMenu = [...filteredMenu];
+
+  const itemIndex = updatedFilteredMenu.findIndex((item) => item._id === id);
+
+  if (itemIndex !== -1) {
+    updatedFilteredMenu[itemIndex].quantity = quantity;
+  }
+    setFilteredMenu(updatedFilteredMenu);
   };
 
   const checkoutPage = () => {
@@ -218,15 +231,16 @@ const MenuList = ({ category }) => {
   );
 
   const fetchMoreData = () => {
-    setTimeout(() => {
-      const endIndex = startIndex + pageSize;
-      console.log("the menu data in fetchmoredata:",menuData)
-      const newItems = menuData.slice(startIndex, endIndex);
-      setFilteredMenu((prevItems) => [...prevItems, ...newItems]);
-      setStartIndex(endIndex);
-      setHasMore(menuData.length > endIndex);
-    }, 500); // Simulating delay for API call
-  };
+  setTimeout(() => {
+    const newStartIndex = startIndex + pageSize;
+    const newEndIndex = newStartIndex + pageSize;
+    const newItems = menuData.slice(newStartIndex, newEndIndex);
+    console.log("is quantity change happening:", menuData, filteredMenu);
+    setFilteredMenu((prevItems)=>[...prevItems, ...newItems]);
+    setStartIndex(newStartIndex);
+    setHasMore(newEndIndex < menuData.length);
+  }, 500); // Simulating delay for API call
+};
 
   return (
     // <ThemeProvider theme={theme}>

@@ -6,6 +6,7 @@
   "homepage": "https://thedigitallicious.online/",
   "proxy": "http://localhost:6000/",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
