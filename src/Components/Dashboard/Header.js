@@ -175,9 +175,9 @@ const Header = () => {
     <div>
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolUi}>
-          {/* <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleSideNavToggle}>
+          <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleSideNavToggle}>
             <MenuIcon sx={{ fontSize: '30px' }} />
-          </IconButton> */}
+          </IconButton>
           {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'flex-start' }}>
             FOODILICIOUS
           </Typography> */}
@@ -211,7 +211,7 @@ const Header = () => {
       />
         </div>
       )}
-       {/* <SwipeableDrawer
+       <SwipeableDrawer
         anchor="top"
         open={sideNavOpen}
         onClose={handleSideNavToggle}
@@ -221,7 +221,7 @@ const Header = () => {
       >
         <div className={classes.sideNav}>
           <div className={classes.close}>
-            <CloseIcon className={classes.closeIcon} onClose={handleSideNavToggle}/>
+            <CloseIcon className={classes.closeIcon} onClick={handleSideNavToggle}/>
           </div>
          
           <div className={classes.listBar}>
@@ -258,7 +258,7 @@ const Header = () => {
             </IconButton>
           </div>
         </div>
-      </SwipeableDrawer>  */}
+      </SwipeableDrawer> 
     </div>
   );
 };
