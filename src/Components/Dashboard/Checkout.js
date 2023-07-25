@@ -152,9 +152,10 @@ export const Checkout = () => {
   const totalState = useSelector((state) => state.menu);
   const dirtyItems = useSelector((state) => state.menu.dirtyItems);
 
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
+  let rId = user.unmaskedData.rid;
 
-  console.log("the state now:", totalState);
+
   const [popupOpen, setPopupOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -201,16 +202,16 @@ export const Checkout = () => {
       totalPrice += parseFloat(indPrice);
     });
     axios
-      .post("/api/orders", {
+      .post("/api/postOrder", {
         items: finalItems,
         totalAmount: totalPrice,
         status: "New",
         restaurantId: user.unmaskedData.rid,
         userId: user.userDetails.sub,
-        table: user.unmaskedData.tableNumber
+        table: user.unmaskedData.tableNumber,
+        rId
       })
       .then(function (response) {
-        console.log("the response:", response);
         dispatch({
           type: CLEAR_MENU_ITEMS,
         });
@@ -227,7 +228,6 @@ export const Checkout = () => {
       type: UPDATE_QUANTITY,
       payload: { id, quantity, price, name },
     });
-    console.log("the updated quantity:", totalState);
   };
 
   return (
@@ -352,9 +352,9 @@ export const Checkout = () => {
           </div>
           <Box className={classes.boxList}>
             {totalState.dirtyItems !== ""
-              ? totalState.dirtyItems.map((item) => {
+              ? totalState.dirtyItems.map((item,key) => {
                   return (
-                    <div className={classes.orderItem}>
+                    <div className={classes.orderItem} key={key}>
                       <div className={classes.singleItem}>
                         {" "}
                         <AdjustIcon
@@ -415,76 +415,71 @@ export const Checkout = () => {
                 })
               : null}
           </Box>
-          <div>
-            <a
-              onClick={handleOpenPopup}
-              style={{
-                color: "blue",
-                // display: "inline",
-                fontSize: "small",
-                marginRight: "100px",
-              }}
-            >
-              Add cooking instructions?
-            </a>
-          </div>
-        </Box>
+          {/* <div>
+          <a  onClick={handleOpenPopup} style={{
+                            color: "blue",
+                            // display: "inline",
+                            fontSize: "small",
+                            marginRight:"100px"
+                          }} >Add cooking instructions?</a>
+         </div> */}
+          </Box>
+       
 
-        <div className={classes.footer}>
-          <Button
-            className={classes.orderButton}
-            variant="contained"
-            color="primary"
-            onClick={placeOrder}
-          >
-            Place Order
-          </Button>
-        </div>
-        {popup && (
-          <div>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Popup Title</DialogTitle>
-              <DialogContent dividers>
-                <p>Your order has been sent successfully!</p>
-              </DialogContent>
-              <DialogActions
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose} autoFocus>
-                  OK
-                </Button>
-              </DialogActions>
-            </Dialog>
+          <div className={classes.footer}>
+            <Button
+              className={classes.orderButton}
+              variant="contained"
+              color="primary"
+              onClick={placeOrder}
+             
+            >
+              Place Order
+            </Button>
           </div>
-        )}
+          {popup && (
+            <div>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Bon Appetit !!</DialogTitle>
+                <DialogContent dividers>
+                  <p>Your order has been placed successfully!</p>
+                </DialogContent>
+                <DialogActions
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* <Button onClick={handleClose}>Cancel</Button> */}
+                  <Button onClick={handleClose} autoFocus>
+                    OK
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+            
+          )}
       </div>
-      <Dialog
-        className={classes.cookPop}
-        open={popupOpen}
-        onClose={handleClosePopup}
-      >
-        <DialogTitle>Cooking Instructions</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Instructions"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-            // Add any necessary props or event handlers
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClosePopup} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {/* <Dialog  className={ classes.cookPop} open={popupOpen} onClose={handleClosePopup}>
+  <DialogTitle>Cooking Instructions</DialogTitle>
+  <DialogContent>
+    <TextField
+      label="Instructions"
+      multiline
+      rows={4}
+      variant="outlined"
+      fullWidth
+      // Add any necessary props or event handlers
+    />
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClosePopup} color="primary">
+      Close
+    </Button>
+  </DialogActions>
+</Dialog> */}
+
     </div>
   );
 };

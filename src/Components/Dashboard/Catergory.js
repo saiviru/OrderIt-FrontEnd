@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { makeStyles } from "@mui/styles";
 import { Button } from "@mui/material";
-import image from "../Dashboard/image.jpg"
+import image from "../Dashboard/image.jpg";
+import { useSelector } from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems:"center"
   },
   categoriesText:{
-    marginTop:'6px'
+    marginTop:'6px',
+    textAlign:''
   },
   circle: {
     borderRadius: "50% !important",
@@ -45,11 +48,14 @@ const useStyles = makeStyles((theme) => ({
 const CircularButton = ({ sendDataToParent }) => {
   const [categories, setCategories] = useState();
 
+  const user = useSelector((state) => state.user);
+  let rId = user.unmaskedData.rid;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/api/resCategories/64855c06301210ee5fe876a2`
+          `/api/resCategories/${rId}`
         );
         const categories = response.data;
         setCategories(categories.data);
@@ -58,7 +64,7 @@ const CircularButton = ({ sendDataToParent }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [rId]);
 
   const classes = useStyles();
 
