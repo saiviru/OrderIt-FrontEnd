@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   menuContainer: {
     overflowY: "auto",
     paddingBottom: "45px",
+    marginBottom:'70px',
   },
   buttonHolder: {
     position: "absolute",
@@ -88,6 +89,9 @@ const useStyles = makeStyles((theme) => ({
   outButton: {
     background: theme.palette.primary.main + "!important",
   },
+  course1:{
+    marginBottom:'70px'
+  },
   // courseInfo: {
   //   padding: "10px",
   //   position: "relative",
@@ -115,6 +119,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     margin: "20px",
     overflow: "hidden",
+    // marginBottom:'70px'
+
   },
   coursePreview: {
     display: "flex",
@@ -265,7 +271,7 @@ const MenuList = ({ category }) => {
         loader={<h4>Loading...</h4>} // Loader component displayed while loading
         endMessage={<p>That's all folks!.</p>} // Message displayed when all data is loaded
       >
-        <Grid>
+        <Grid className={classes.course1} >
           {filteredMenu && filteredMenu !== ""
             ? filteredMenu.map((item, key) => {
               return (
