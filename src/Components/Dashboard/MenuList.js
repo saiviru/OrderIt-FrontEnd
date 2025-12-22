@@ -188,13 +188,65 @@ const MenuList = ({ category }) => {
   const pageSize = 10; // Number of items to load per page
 
   useEffect(() => {
-    axios.get("/api/getMenu/" + rId).then((response) => {
-      let menuData = response.data.data.map((item) => ({ ...item, quantity: 0 }));
-      setMenu(menuData);
-      dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
-      setHasMore(menuData.length > pageSize);
-      setFilteredMenu(menuData.slice(0, pageSize));
-    });
+    // Dummy data fallback
+    const dummyMenuData = [
+      {
+        _id: "1",
+        itemName: "Margherita Pizza",
+        price: 299,
+        category: "Best Seller",
+        image: "https://www.acouplecooks.com/wp-content/uploads/2022/10/Margherita-Pizza-093.jpg",
+        quantity: 0
+      },
+      {
+        _id: "2", 
+        itemName: "Chicken Burger",
+        price: 199,
+        category: "Best Seller",
+        image: "https://i0.wp.com/flaevor.com/wp-content/uploads/2022/04/SambalFriedChickenBurger1.jpg?resize=1024%2C830&ssl=1",
+        quantity: 0
+      },
+      {
+        _id: "3",
+        itemName: "Caesar Salad",
+        price: 149,
+        category: "Salads",
+        image: "https://www.allrecipes.com/thmb/mXZ0Tulwn3x9_YB_ZbkiTveDYFE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/229063-Classic-Restaurant-Caesar-Salad-ddmfs-4x3-231-89bafa5e54dd4a8c933cf2a5f9f12a6f.jpg",
+        quantity: 0
+      },
+      {
+        _id: "4",
+        itemName: "Pasta Carbonara",
+        price: 249,
+        category: "Pasta",
+        image: "https://static01.nyt.com/images/2021/02/14/dining/carbonara-horizontal/carbonara-horizontal-mediumSquareAt3X-v2.jpg",
+        quantity: 0
+      },
+      {
+        _id: "5",
+        itemName: "Fish & Chips",
+        price: 329,
+        category: "Best Seller",
+        image: "https://www.slimfast.co.uk/uploads/recipes/6849f38c087efff.jpg",
+        quantity: 0
+      }
+    ];
+
+    axios.get("/api/getMenu/" + rId)
+      .then((response) => {
+        let menuData = response.data.data.map((item) => ({ ...item, quantity: 0 }));
+        setMenu(menuData);
+        dispatch({ type: "SET_MENU_ITEMS", payload: menuData });
+        setHasMore(menuData.length > pageSize);
+        setFilteredMenu(menuData.slice(0, pageSize));
+      })
+      .catch((error) => {
+        console.log("API failed, using dummy data:", error);
+        setMenu(dummyMenuData);
+        dispatch({ type: "SET_MENU_ITEMS", payload: dummyMenuData });
+        setHasMore(dummyMenuData.length > pageSize);
+        setFilteredMenu(dummyMenuData.slice(0, pageSize));
+      });
   }, [rId]);
 
   useEffect(() => {
@@ -281,8 +333,11 @@ const MenuList = ({ category }) => {
                       component="img"
                       className={classes.dishImage}
                       src={
-                        "https://foodappdata.s3.ap-south-1.amazonaws.com/josh/" +
-                        item.image
+                        item.image.startsWith('http') 
+                          ? item.image
+                          : item.image.includes('.jpg') || item.image.includes('.png') 
+                            ? `https://via.placeholder.com/200x125/ff6d75/ffffff?text=${encodeURIComponent(item.itemName)}`
+                            : "https://foodappdata.s3.ap-south-1.amazonaws.com/josh/" + item.image
                       }
                       alt={"the menu picture for" + item.itemName}
                     />

@@ -175,15 +175,26 @@ const Header = () => {
     <div>
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolUi}>
-          {/* <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleSideNavToggle}>
-            <MenuIcon sx={{ fontSize: '30px' }} />
-          </IconButton> */}
-          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'flex-start' }}>
-            FOODILICIOUS
-          </Typography> */}
-          <IconButton edge="end" color="inherit" aria-label="profile">
-            <SearchIcon sx={{ fontSize: '30px', justifyContent: 'flex-end'}} onClick={handleSearchToggle} />
-          </IconButton>
+          <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+            <img 
+              src="https://via.placeholder.com/40x40/ff6d75/ffffff?text=🍕" 
+              alt="OrderIt Logo" 
+              style={{ marginRight: '10px', borderRadius: '50%' }}
+            />
+            <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', color: '#fff' }}>
+              OrderIt
+            </Typography>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <img 
+              src="https://via.placeholder.com/30x30/ffffff/ff6d75?text=🍔" 
+              alt="Food Icon" 
+              style={{ borderRadius: '50%' }}
+            />
+            <IconButton edge="end" color="inherit" aria-label="search">
+              <SearchIcon sx={{ fontSize: '30px' }} onClick={handleSearchToggle} />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       {searchOpen && (

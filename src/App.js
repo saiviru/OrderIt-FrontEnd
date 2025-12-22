@@ -28,8 +28,7 @@ function App() {
         <Account>
           <Routes>
             <Route element={<ProtectedRoutes redirectPath="/login" />}>
-              {/* <Route index path="/menu" element={<NewMenu />} /> */}
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<NewMenu />} />
               <Route path="/status" element={<Status />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/menu" element={<NewMenu />} />
